@@ -4,111 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AgroCare - ระบบจัดการแปลงและพ่นยา</title>
-  <style>
-    :root {
-        /* ปรับจาก #f0f2f0 เป็น #e2e8e2 เพื่อให้เข้มขึ้นและตัดกับกล่องสีขาวชัดๆ */
-        --soft-bg: #e2e8e2;           
-        --card-white: #ffffff;        
-        --primary-green: #2e7d32;      
-        --danger-red: #ef4444;        
-        --accent-orange: #f39c12;     
-    }
+    <style>
+        /* CSS เดิมของคุณทั้งหมดที่ตกแต่งไว้สวยแล้ว */
+        :root {
+            --soft-bg: #e2e8e2;           
+            --card-white: #ffffff;        
+            --primary-green: #2e7d32;      
+            --danger-red: #ef4444;        
+            --accent-orange: #f39c12;     
+        }
 
-    body {
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-        background-color: var(--soft-bg); /* พื้นหลังนวลตา */
-        margin: 0;
-        padding: 20px;
-        color: var(--text-main);
-    }
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: var(--soft-bg);
+            margin: 0;
+            padding: 20px;
+        }
 
-    .container {
-        max-width: 950px;
-        margin: auto;
-    }
+        .container { max-width: 950px; margin: auto; }
 
-    /* กล่องข้อความแบบที่ 1 แต่ปรับเงาให้นุ่มนวล */
-    .step-container {
-        background: var(--card-white);
-        padding: 20px;
-        border-radius: 12px;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-        margin-bottom: 20px;
-    }
+        .step-container {
+            background: var(--card-white);
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
 
-    h1, h3 { color: var(--primary-green); margin-top: 0; }
+        h1, h3 { color: var(--primary-green); margin-top: 0; }
 
-    /* ปุ่มแบบแรกที่สีสดและชัดเจน */
-    button {
-        padding: 10px 20px;
-        border: none;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: bold;
-        transition: 0.3s;
-    }
+        button {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: 0.3s;
+        }
 
-    .btn-green { background: var(--primary-green); color: white; }
-    .btn-green:hover { background: #1b5e20; }
-    
-    .btn-orange { background: var(--accent-orange); color: white; }
-    .btn-red { background: var(--danger-red); color: white; }
+        .btn-green { background: var(--primary-green); color: white; }
+        .btn-green:hover { background: #1b5e20; }
+        .btn-orange { background: var(--accent-orange); color: white; }
+        .btn-red { background: var(--danger-red); color: white; }
 
-    input, select, textarea {
-        width: 100%;
-        padding: 12px;
-        margin-top: 10px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        box-sizing: border-box;
-        font-size: 16px;
-    }
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
 
-    /* ตารางแบบที่ 1 ที่เน้นความโปร่งและอ่านง่าย */
-    table {
-        width: 100%;
-        border-collapse: collapse;
-        background: white;
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-    }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
 
-    th {
-        background: #f8fafc;
-        padding: 15px;
-        text-align: left;
-        color: #64748b;
-        border-bottom: 2px solid #edf2f7;
-    }
+        th {
+            background: #f8fafc;
+            padding: 15px;
+            text-align: left;
+            color: #64748b;
+            border-bottom: 2px solid #edf2f7;
+        }
 
-    td {
-        padding: 15px;
-        border-bottom: 1px solid #edf2f7;
-    }
+        td { padding: 15px; border-bottom: 1px solid #edf2f7; }
 
-    .moa-badge {
-        background: #dcfce7;
-        color: var(--primary-green);
-        padding: 4px 10px;
-        border-radius: 20px;
-        font-weight: bold;
-        font-size: 0.85em;
-    }
+        .moa-badge {
+            background: #dcfce7;
+            color: var(--primary-green);
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.85em;
+        }
 
-    .list-item {
-        padding: 12px;
-        border-bottom: 1px solid #eee;
-        cursor: pointer;
-    }
-    .list-item:hover { background: #f0fdf4; }
+        .list-item {
+            padding: 12px;
+            border-bottom: 1px solid #eee;
+            cursor: pointer;
+        }
+        .list-item:hover { background: #f0fdf4; }
 
-    .hidden { display: none; }
-</style>
+        .hidden { display: none; }
+        
+        .control-group { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+    </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
             <h2>🌿 AgroCare Dashboard</h2>
             <div style="text-align: right;">
                 <span style="display: block; font-size: 0.9rem; color: #666;">ผู้ใช้งาน: <b><%= user_name %></b></span>
@@ -119,8 +110,10 @@
         <div class="step-container">
             <h3>📍 จัดการพื้นที่/แปลงปลูก</h3>
             <div class="control-group">
-                <select id="plotSelect" onchange="selectPlot()" style="flex: 2; min-width: 200px;"></select>
-                <button onclick="addPlot()" class="btn-green"><span>+</span> เพิ่มแปลง</button>
+                <select id="plotSelect" onchange="selectPlot()" style="flex: 2; min-width: 200px;">
+                    <option value="">กำลังโหลดข้อมูลแปลง...</option>
+                </select>
+                <button onclick="addPlot()" class="btn-green">+ เพิ่มแปลง</button>
                 <button onclick="renamePlot()" class="btn-orange">📝 แก้ชื่อ</button>
                 <button onclick="deletePlot()" class="btn-red">🗑️ ลบแปลง</button>
             </div>
@@ -144,31 +137,159 @@
 
         <div id="step5" class="step-container hidden">
             <h3>✅ 4. บันทึกประวัติ</h3>
-            <div style="background: var(--light-green); padding: 15px; border-radius: 10px; margin-bottom: 15px;">
+            <div style="background: #e8f5e9; padding: 15px; border-radius: 10px; margin-bottom: 15px;">
                 <span id="summaryText" style="font-weight: bold; color: var(--primary-green);"></span>
             </div>
             <textarea id="note" placeholder="บันทึกเพิ่มเติม (เช่น สภาพอากาศ, อัตราผสม)..."></textarea>
-            <button onclick="saveHistory()" class="btn-green" style="width: 100%; justify-content: center; margin-top: 15px; padding: 15px;">บันทึกข้อมูล</button>
+            <button onclick="saveHistory()" class="btn-green" style="width: 100%; margin-top: 15px; padding: 15px;">บันทึกข้อมูล</button>
         </div>
 
-        <h3 style="border: none; padding: 0; margin-bottom: 15px;">📊 ประวัติย้อนหลัง</h3>
-        <div class="table-wrapper">
-            <table>
-                <thead>
-                    <tr>
-                        <th>วันที่</th>
-                        <th>แปลง</th>
-                        <th>ศัตรูพืช</th>
-                        <th>กลุ่ม MoA</th>
-                        <th>ยี่ห้อ</th>
-                        <th>หมายเหตุ</th>
-                    </tr>
-                </thead>
-                <tbody id="historyTableBody"></tbody>
-            </table>
-        </div>
+        <h3 style="margin-top: 30px;">📊 ประวัติย้อนหลัง</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>วันที่</th>
+                    <th>แปลง</th>
+                    <th>ศัตรูพืช</th>
+                    <th>กลุ่ม MoA</th>
+                    <th>ยี่ห้อ</th>
+                    <th>หมายเหตุ</th>
+                </tr>
+            </thead>
+            <tbody id="historyTableBody"></tbody>
+        </table>
     </div>
 
-    <script src="/script.js"></script>
+    <script>
+        let selectedPlotId, selectedPestId, selectedMoAId, selectedProductId;
+
+        // โหลดข้อมูลทันทีที่เปิดหน้า
+        window.onload = () => {
+            loadPlots();
+            loadHistory();
+        };
+
+        async function loadPlots() {
+            const res = await fetch('/api/plots');
+            const data = await res.json();
+            const select = document.getElementById('plotSelect');
+            select.innerHTML = '<option value="">เลือกแปลงปลูก</option>';
+            data.forEach(p => {
+                select.innerHTML += `<option value="${p.plot_id}">${p.plot_name}</option>`;
+            });
+        }
+
+        function selectPlot() {
+            selectedPlotId = document.getElementById('plotSelect').value;
+            if(selectedPlotId) document.getElementById('step1').classList.remove('hidden');
+        }
+
+        async function addPlot() {
+            const name = prompt("ชื่อแปลงใหม่:");
+            if(!name) return;
+            await fetch('/api/plots', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({plot_name: name})
+            });
+            loadPlots();
+        }
+
+        async function renamePlot() {
+            const id = document.getElementById('plotSelect').value;
+            if(!id) return alert("เลือกแปลงก่อน");
+            const newName = prompt("ชื่อใหม่:");
+            if(!newName) return;
+            await fetch('/api/plots/update', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({plot_id: id, plot_name: newName})
+            });
+            loadPlots();
+        }
+
+        async function searchPests() {
+            const val = document.getElementById('searchPest').value;
+            if(val.length < 1) return;
+            const res = await fetch(`/api/pests?name=${val}`);
+            const data = await res.json();
+            const list = document.getElementById('pestList');
+            list.innerHTML = '';
+            data.forEach(p => {
+                const item = document.createElement('div');
+                item.className = 'list-item';
+                item.textContent = p.pest_name;
+                item.onclick = () => selectPest(p.pest_id, p.pest_name);
+                list.appendChild(item);
+            });
+        }
+
+        async function selectPest(id, name) {
+            selectedPestId = id;
+            document.getElementById('step2').classList.remove('hidden');
+            const res = await fetch(`/api/moa-groups?pest_id=${id}`);
+            const data = await res.json();
+            const list = document.getElementById('moaList');
+            list.innerHTML = '';
+            data.forEach(m => {
+                list.innerHTML += `<div class="list-item" onclick="selectMoA('${m.g_id}', '${m.g_name}')">
+                    <span class="moa-badge">${m.g_id}</span> ${m.g_name}
+                </div>`;
+            });
+        }
+
+        async function selectMoA(id, name) {
+            selectedMoAId = id;
+            document.getElementById('step3').classList.remove('hidden');
+            const res = await fetch(`/api/products?g_id=${id}`);
+            const data = await res.json();
+            const list = document.getElementById('productList');
+            list.innerHTML = '';
+            data.forEach(p => {
+                list.innerHTML += `<div class="list-item" onclick="confirmProduct(${p.p_id}, '${p.p_name}')">${p.p_name}</div>`;
+            });
+        }
+
+        function confirmProduct(id, name) {
+            selectedProductId = id;
+            document.getElementById('step5').classList.remove('hidden');
+            document.getElementById('summaryText').textContent = `เตรียมบันทึก: ผลิตภัณฑ์ ${name}`;
+        }
+
+        async function saveHistory() {
+            const note = document.getElementById('note').value;
+            await fetch('/api/usage-history', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    plot_id: selectedPlotId, 
+                    pest_id: selectedPestId, 
+                    g_id: selectedMoAId, 
+                    p_id: selectedProductId, 
+                    notes: note
+                })
+            });
+            alert("บันทึกสำเร็จ!");
+            location.reload();
+        }
+
+        async function loadHistory() {
+            const res = await fetch('/api/usage-history');
+            const data = await res.json();
+            const tbody = document.getElementById('historyTableBody');
+            tbody.innerHTML = '';
+            data.forEach(h => {
+                const date = new Date(h.usage_date).toLocaleDateString('th-TH');
+                tbody.innerHTML += `<tr>
+                    <td>${date}</td>
+                    <td>${h.plot_name}</td>
+                    <td>${h.pest_name}</td>
+                    <td><span class="moa-badge">${h.g_id}</span></td>
+                    <td>${h.p_name}</td>
+                    <td>${h.notes || '-'}</td>
+                </tr>`;
+            });
+        }
+    </script>
 </body>
 </html>

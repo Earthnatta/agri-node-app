@@ -16,7 +16,7 @@ app.use(session({
     secret: process.env.SESSION_SECRET || 'agri_secret_key_123',
     resave: false,
     saveUninitialized: true,
-    cookie: { secure: false } // ตั้งเป็น true ถ้าใช้ https และมีการทำ proxy ที่เข้มงวด
+    cookie: { secure: false }
 }));
 
 // Middleware ตรวจสอบการ Login
@@ -26,7 +26,6 @@ const isAdmin = (req, res, next) => {
 };
 
 // --- Authentication ---
-// หน้าแรก ถ้ายังไม่ Login จะถูก isAdmin ดีดไปหน้า /login
 app.get('/', isAdmin, (req, res) => {
     res.render('index', { user_name: req.session.user_name });
 });
@@ -37,13 +36,13 @@ app.get('/register', (req, res) => res.render('register'));
 app.post('/register', async (req, res) => {
     const { full_name, username, password } = req.body;
     try {
-        // ตรวจสอบว่าตาราง users มีอยู่จริงก่อน insert
         const [result] = await db.query('INSERT INTO users (full_name, username, password) VALUES (?, ?, ?)', [full_name, username, password]);
+        // สร้างแปลงเริ่มต้นให้ผู้ใช้ใหม่ทันที
         await db.query('INSERT INTO plots (user_id, plot_name, crop_type) VALUES (?, ?, ?)', [result.insertId, 'แปลงเริ่มต้น', 'ทั่วไป']);
         res.send('สมัครสำเร็จ! <a href="/login">ไปที่หน้า Login</a>');
     } catch (err) { 
         console.error(err);
-        res.status(500).send("เกิดข้อผิดพลาด: อาจมีชื่อผู้ใช้นี้แล้ว หรือยังไม่ได้สร้างตารางในฐานข้อมูล"); 
+        res.status(500).send("เกิดข้อผิดพลาด: อาจมีชื่อผู้ใช้นี้แล้ว หรือยังไม่ได้สร้างตาราง"); 
     }
 });
 
@@ -69,7 +68,44 @@ app.get('/logout', (req, res) => {
     res.redirect('/login'); 
 });
 
-// --- API ต่างๆ ---
+// --- API สำหรับจัดการแปลงเกษตร (ตาราง plots) ---
+
+// 1. ดึงรายชื่อแปลงทั้งหมดของคนที่ Login อยู่
+app.get('/api/plots', isAdmin, async (req, res) => {
+    try {
+        const [rows] = await db.query('SELECT * FROM plots WHERE user_id = ?', [req.session.user_id]);
+        res.json(rows);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json([]);
+    }
+});
+
+// 2. เพิ่มแปลงใหม่
+app.post('/api/plots', isAdmin, async (req, res) => {
+    const { plot_name, crop_type } = req.body;
+    try {
+        await db.query('INSERT INTO plots (user_id, plot_name, crop_type) VALUES (?, ?, ?)', 
+        [req.session.user_id, plot_name, crop_type || 'ทั่วไป']);
+        res.json({ success: true });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ success: false });
+    }
+});
+
+// 3. ลบแปลง
+app.delete('/api/plots/:id', isAdmin, async (req, res) => {
+    try {
+        await db.query('DELETE FROM plots WHERE plot_id = ? AND user_id = ?', [req.params.id, req.session.user_id]);
+        res.json({ success: true });
+    } catch (err) {
+        res.status(500).json({ success: false });
+    }
+});
+
+// --- API สำหรับข้อมูลแมลงและประวัติการใช้งาน ---
+
 app.get('/api/pests', isAdmin, async (req, res) => {
     try {
         const [rows] = await db.query('SELECT * FROM pest WHERE pest_name LIKE ?', [`%${req.query.name || ''}%`]);
@@ -77,11 +113,25 @@ app.get('/api/pests', isAdmin, async (req, res) => {
     } catch (err) { res.status(500).json([]); }
 });
 
-// ... (API อื่นๆ ของคุณใช้โครงสร้างเดิมได้เลยครับ) ...
+app.get('/api/usage-history', isAdmin, async (req, res) => {
+    try {
+        const query = `
+            SELECT h.*, p.plot_name, pst.pest_name 
+            FROM usage_history h
+            LEFT JOIN plots p ON h.plot_id = p.plot_id
+            LEFT JOIN pest pst ON h.pest_id = pst.pest_id
+            WHERE h.user_id = ?
+            ORDER BY h.usage_date DESC
+        `;
+        const [rows] = await db.query(query, [req.session.user_id]);
+        res.json(rows);
+    } catch (err) {
+        res.status(500).json([]);
+    }
+});
 
 // --- ส่วนสำคัญสำหรับการรันบน Render ---
-// เปลี่ยนจากเลข 3000 เป็นการดึงค่าจาก Environment Variable
-const PORT = process.env.PORT || 10000; // เปลี่ยนเป็น 10000 หรือใช้ค่าจากระบบ
+const PORT = process.env.PORT || 10000;
 app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
 });

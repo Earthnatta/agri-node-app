@@ -81,7 +81,7 @@ app.get('/api/pests', isAdmin, async (req, res) => {
 
 // --- ส่วนสำคัญสำหรับการรันบน Render ---
 // เปลี่ยนจากเลข 3000 เป็นการดึงค่าจาก Environment Variable
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.PORT || 10000; // เปลี่ยนเป็น 10000 หรือใช้ค่าจากระบบ
 app.listen(PORT, () => {
     console.log(`✅ Server is running on port ${PORT}`);
 });

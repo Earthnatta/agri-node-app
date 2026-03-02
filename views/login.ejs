@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>เข้าสู่ระบบ - AgroCare</title>
+    <style>
+        :root {
+            --primary-green: #2e7d32;
+            --soft-bg: #e2e8e2; /* สีพื้นหลังนวลตาที่ปรับใหม่ */
+            --card-white: #ffffff;
+            --text-main: #344e41;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--soft-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: var(--text-main);
+        }
+
+        .login-card {
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+        }
+
+        h2 { color: var(--primary-green); margin-bottom: 25px; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border: 1.5px solid #d1d9d1;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus { border-color: var(--primary-green); }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover { background: #1b5e20; transform: translateY(-1px); }
+
+        .footer-links { margin-top: 20px; font-size: 14px; }
+        .footer-links a { color: var(--primary-green); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="login-card">
+        <h2>🌿 AgroCare</h2>
+        <p>กรุณาเข้าสู่ระบบเพื่อจัดการแปลงปลูก</p>
+        <form action="/login" method="POST">
+            <input type="text" name="username" placeholder="ชื่อผู้ใช้งาน" required>
+            <input type="password" name="password" placeholder="รหัสผ่าน" required>
+            <button type="submit">เข้าสู่ระบบ</button>
+        </form>
+        <div class="footer-links">
+            ยังไม่มีบัญชี? <a href="/register">สมัครสมาชิกที่นี่</a>
+        </div>
+    </div>
+</body>
+</html>

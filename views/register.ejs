@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>สมัครสมาชิก - AgroCare</title>
+    <style>
+        /* ใช้ CSS เดียวกับหน้า Login เพื่อความคุมโทน */
+        :root {
+            --primary-green: #2e7d32;
+            --soft-bg: #e2e8e2;
+            --card-white: #ffffff;
+            --text-main: #344e41;
+        }
+
+        body {
+            font-family: 'Sarabun', sans-serif;
+            background-color: var(--soft-bg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .register-card {
+            background: var(--card-white);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+
+        h2 { color: var(--primary-green); margin-bottom: 20px; }
+
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 12px;
+            border: 1.5px solid #d1d9d1;
+            border-radius: 10px;
+            box-sizing: border-box;
+            font-size: 16px;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: var(--primary-green);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .footer-links { margin-top: 20px; font-size: 14px; }
+        .footer-links a { color: var(--primary-green); text-decoration: none; font-weight: bold; }
+    </style>
+</head>
+<body>
+    <div class="register-card">
+        <h2>🌱 สมัครสมาชิกใหม่</h2>
+        <p>เริ่มต้นจัดการการพ่นยาอย่างเป็นระบบ</p>
+        <form action="/register" method="POST">
+            <input type="text" name="full_name" placeholder="ชื่อ-นามสกุล" required>
+            <input type="text" name="username" placeholder="ตั้งชื่อผู้ใช้งาน" required>
+            <input type="password" name="password" placeholder="ตั้งรหัสผ่าน" required>
+            <button type="submit">ยืนยันการสมัคร</button>
+        </form>
+        <div class="footer-links">
+            มีบัญชีอยู่แล้ว? <a href="/login">กลับไปหน้าเข้าสู่ระบบ</a>
+        </div>
+    </div>
+</body>
+</html>
